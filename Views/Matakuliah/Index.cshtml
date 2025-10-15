@@ -1,0 +1,49 @@
+﻿@model IEnumerable<TesProgrammer.Models.DB.Matakuliah>
+
+<div style="font-family: Arial; font-size: 14px;">
+    <div style="border: 1px solid #000; width: 400px; padding: 10px;">
+        <div style="background: yellow; font-weight: bold; padding: 3px 8px; display: inline-block;">
+            MATA KULIAH
+        </div>
+
+        <form asp-action="Index" method="post" style="margin-top: 15px;">
+            <table style="width:100%;">
+                <tr>
+                    <td style="width: 130px;">Kode Mata Kuliah</td>
+                    <td>
+                        <input name="KodeMataKuliah"
+                               style="width:120px; border:1px solid #000; height:25px;" required />
+                    </td>
+                </tr>
+                <tr><td colspan="2" style="height:10px;"></td></tr>
+                <tr>
+                    <td>Nama Mata Kuliah</td>
+                    <td>
+                        <input name="NamaMataKuliah"
+                               style="width:250px; border:1px solid #000; height:25px;" required />
+                    </td>
+                </tr>
+            </table>
+
+            <div style="text-align: right; margin-top: 20px;">
+                <button type="submit"
+                        style="background-color:#5dade2; color:white; border:none;
+                               padding:5px 20px; border-radius:3px; font-weight:bold;">
+                    SAVE
+                </button>
+                <a asp-action="Index"
+                   style="background-color:#5dade2; color:white; border:none;
+                          padding:5px 20px; border-radius:3px; font-weight:bold;
+                          text-decoration:none; margin-left:5px;">
+                    CANCEL
+                </a>
+            </div>
+        </form>
+
+        @if (ViewBag.Message != null)
+        {
+            <p style="color: green; margin-top: 10px;">@ViewBag.Message</p>
+        }
+
+    </div>
+</div>

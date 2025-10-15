@@ -1,0 +1,13 @@
+form, table {
+    font-size: 14px;
+}
+
+.btn-primary {
+    background-color: #3b82f6;
+    border: none;
+}
+
+.btn-secondary {
+    background-color: #9ca3af;
+    border: none;
+}

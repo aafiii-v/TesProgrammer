@@ -1,0 +1,98 @@
+﻿@model TesProgrammer.Models.DB.Dosen
+@{
+    var daftarMk = ViewBag.MataKuliahList as List<TesProgrammer.Models.DB.Matakuliah>;
+}
+
+<div style="font-family: Arial; font-size: 14px;">
+    <div style="border: 1px solid #000; width: 500px; padding: 10px;">
+        <div style="background: yellow; font-weight: bold; padding: 3px 8px; display: inline-block;">
+            DOSEN & MATA KULIAH
+        </div>
+
+        <form asp-action="Create" method="post" style="margin-top: 15px;">
+            <input type="hidden" id="SelectedMataKuliahIds" name="SelectedMataKuliahIds" />
+
+            <table style="width:100%;">
+                <tr>
+                    <td style="width:130px;">Kode Dosen</td>
+                    <td><input asp-for="KodeDosen" style="width:120px; border:1px solid #000; height:25px;" required /></td>
+                </tr>
+                <tr><td colspan="2" style="height:8px;"></td></tr>
+
+                <tr>
+                    <td>Nama Dosen</td>
+                    <td><input asp-for="NamaDosen" style="width:200px; border:1px solid #000; height:25px;" required /></td>
+                </tr>
+                <tr><td colspan="2" style="height:8px;"></td></tr>
+
+                <tr>
+                    <td>Tahun Pensiun</td>
+                    <td><input asp-for="TahunPensiun" type="number" style="width:120px; border:1px solid #000; height:25px;" required /></td>
+                </tr>
+                <tr>
+                    <td>Pilih Mata Kuliah (Mandatory)</td>
+                </tr>
+            </table>
+
+            <table id="tabelMK" style="width:100%; border-collapse:collapse; margin-top:15px; cursor:pointer;" border="1">
+                <thead>
+                    <tr style="background:#f8f9fa; text-align:center;">
+                        <th style="padding:5px; border:1px solid #000;">Kode Mata Kuliah</th>
+                        <th style="padding:5px; border:1px solid #000;">Nama Mata Kuliah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (daftarMk != null && daftarMk.Any())
+                    {
+                        foreach (var mk in daftarMk)
+                        {
+                            <tr data-id="@mk.Id" >
+                                <td style="text-align:center; border:1px solid #000;">@mk.KodeMataKuliah</td>
+                                <td style="text-align:center; border:1px solid #000;">@mk.NamaMataKuliah</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr><td colspan="2" style="text-align:center;">Belum ada data mata kuliah</td></tr>
+                    }
+                </tbody>
+            </table>
+
+            <div style="text-align:right; margin-top:15px;">
+                <button type="submit" style="background-color:#5dade2; color:white; border:none; padding:5px 20px; border-radius:3px; font-weight:bold;">
+                    SAVE
+                </button>
+                <a asp-action="Index" style="background-color:#5dade2; color:white; border:none; padding:5px 20px; border-radius:3px; font-weight:bold; text-decoration:none; margin-left:5px;">
+                    CANCEL
+                </a>
+            </div>
+        </form>
+
+        @if (ViewBag.Message != null)
+        {
+            <p style="color:green; margin-top:10px;">@ViewBag.Message</p>
+        }
+    </div>
+</div>
+
+<script>
+    const rows = document.querySelectorAll("#tabelMK tbody tr");
+    const selectedIds = new Set();
+
+    rows.forEach(row => {
+        row.addEventListener("click", function () {
+            const id = this.dataset.id;
+
+            if (selectedIds.has(id)) {
+                selectedIds.delete(id);
+                this.style.backgroundColor = "white";
+            } else {
+                selectedIds.add(id);
+                this.style.backgroundColor = "#d6eaf8";
+            }
+
+            document.getElementById("SelectedMataKuliahIds").value = Array.from(selectedIds).join(",");
+        });
+    });
+</script>
