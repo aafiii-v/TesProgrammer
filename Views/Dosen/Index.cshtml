@@ -34,7 +34,6 @@
                 </tr>
             </table>
 
-            <!-- Table hanya menampilkan header -->
             <table id="tabelMK" style="width:100%; border-collapse:collapse; margin-top:15px;" border="1">
                 <thead>
                     <tr id="headerRow" style="background:#f8f9fa; text-align:center; cursor:pointer;">
@@ -86,13 +85,11 @@
 </div>
 
 <script>
-    // Klik header → tampil/sembunyikan isi tabel
     document.getElementById("headerRow").addEventListener("click", function () {
         const body = document.getElementById("dropdownBody");
         body.style.display = body.style.display === "none" ? "table-row-group" : "none";
     });
 
-    // Ambil checkbox dan simpan nilai ke hidden input
     const checkboxes = document.querySelectorAll(".mk-row input[type='checkbox']");
     const hiddenInput = document.getElementById("SelectedMataKuliahIds");
 
