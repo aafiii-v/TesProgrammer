@@ -34,38 +34,30 @@
                 </tr>
             </table>
 
-            <table id="tabelMK" style="width:100%; border-collapse:collapse; margin-top:15px;" border="1">
+            <table id="tabelMK" style="width:100%; border-collapse:collapse; margin-top:15px; cursor:pointer;" border="1">
                 <thead>
-                    <tr id="headerRow" style="background:#f8f9fa; text-align:center; cursor:pointer;">
+                    <tr id="headerRow" style="background:#f8f9fa; text-align:center;">
                         <th style="padding:5px; border:1px solid #000;">Kode Mata Kuliah ▼</th>
                         <th style="padding:5px; border:1px solid #000;">Nama Mata Kuliah ▼</th>
                     </tr>
                 </thead>
+            </table>
 
-                <tbody id="dropdownBody" style="display:none;">
+            <div id="dropdownContainer" style="display:none; border:1px solid #000; margin-top:-1px; padding:5px;">
+                <select id="mkSelect" multiple style="width:100%; height:150px;">
                     @if (daftarMk != null && daftarMk.Any())
                     {
                         foreach (var mk in daftarMk)
                         {
-                            <tr data-id="@mk.Id" class="mk-row" style="cursor:pointer;">
-                                <td style="border:1px solid #000; text-align:center; padding:4px;">
-                                    <input type="checkbox" value="@mk.Id" style="margin-right:6px;" />
-                                    @mk.KodeMataKuliah
-                                </td>
-                                <td style="border:1px solid #000; text-align:center; padding:4px;">
-                                    @mk.NamaMataKuliah
-                                </td>
-                            </tr>
+                            <option style="padding:5px; border:1px solid #000;" value="@mk.Id">@mk.KodeMataKuliah - @mk.NamaMataKuliah</option>
                         }
                     }
                     else
                     {
-                        <tr><td colspan="2" style="text-align:center;">Belum ada data mata kuliah</td></tr>
+                        <option disabled>Belum ada data mata kuliah</option>
                     }
-                </tbody>
-            </table>
-
-            <input type="hidden" id="SelectedMataKuliahIds" name="SelectedMataKuliahIds" />
+                </select>
+            </div>
 
             <div style="text-align:right; margin-top:15px;">
                 <button type="submit" style="background-color:#5dade2; color:white; border:none; padding:5px 20px; border-radius:3px; font-weight:bold;">
@@ -86,19 +78,13 @@
 
 <script>
     document.getElementById("headerRow").addEventListener("click", function () {
-        const body = document.getElementById("dropdownBody");
-        body.style.display = body.style.display === "none" ? "table-row-group" : "none";
+        const dropdown = document.getElementById("dropdownContainer");
+        dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
     });
 
-    const checkboxes = document.querySelectorAll(".mk-row input[type='checkbox']");
-    const hiddenInput = document.getElementById("SelectedMataKuliahIds");
-
-    checkboxes.forEach(cb => {
-        cb.addEventListener("change", () => {
-            const selected = Array.from(checkboxes)
-                .filter(x => x.checked)
-                .map(x => x.value);
-            hiddenInput.value = selected.join(",");
-        });
+    const mkSelect = document.getElementById("mkSelect");
+    mkSelect.addEventListener("change", function () {
+        const selectedValues = Array.from(this.selectedOptions).map(opt => opt.value);
+        document.getElementById("SelectedMataKuliahIds").value = selectedValues.join(",");
     });
 </script>
